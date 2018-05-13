@@ -9,10 +9,27 @@ services:
         autoconfigure: true
         public: false
 
-    app.excerpt_extension:
-        class: AppBundle\Twig\TwigExtension
-        tags:
-            - { name: twig.extension }
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    AppBundle\:
+        resource: '../../src/AppBundle'
+        exclude: '../../src/AppBundle/{Entity,Migrations,Tests,Kernel.php}'
+
+#    AdminBundle\:
+#        resource: '../../src/AdminBundle'
+#        exclude: '../../src/AdminBundle/{Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+#    App\Controller\:
+#        resource: '../src/Controller'
+#        tags: ['controller.service_arguments']
+
+
+#    app.excerpt_extension:
+#        class: AppBundle\Twig\TwigExtension
+#        tags:
+#            - { name: twig.extension }
 
     app.counter_subscriber:
         class: AppBundle\EventListener\CounterSubscriber

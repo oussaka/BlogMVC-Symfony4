@@ -43,9 +43,12 @@
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
         "symfony/dotenv": "^4.0",
+        "symfony/maker-bundle": "^1.4",
         "symfony/phpunit-bridge": "^4.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "symfony/requirements-checker": "^1.1",
+        "symfony/web-server-bundle": "^4.0"
     },
     "config": {
         "preferred-install": {
@@ -56,7 +59,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
+            "requirements-checker": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"

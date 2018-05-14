@@ -17,22 +17,12 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php,AdminBundle,AppBundle.php}'
+        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
         resource: '../src/Controller'
-        tags: ['controller.service_arguments']
-
-    AdminBundle\:
-        resource: '../src/AdminBundle'
-        exclude: '../src/AdminBundle/{Entity,Migrations,Tests,Kernel.php}'
-
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    AdminBundle\Controller\:
-        resource: '../src/AdminBundle/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed

@@ -1,12 +1,13 @@
 <?php
 
-namespace AdminBundle\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Post;
 use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Post controller.
@@ -24,7 +25,7 @@ class PostController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('App:Post');
+        $repository = $em->getRepository(Post::class);
         $paginator  = $this->get('knp_paginator');
 
         $query = $repository->createQueryBuilderWithCategory()
@@ -42,7 +43,7 @@ class PostController extends Controller
             $deleteForms[$post->getId()] = $this->createDeleteForm($post)->createView();
         }
 
-        return $this->render('AdminBundle::post/index.html.twig', array(
+        return $this->render('admin/post/index.html.twig', array(
             'posts' => $posts,
             'delete_forms' => $deleteForms
         ));
@@ -57,7 +58,7 @@ class PostController extends Controller
     public function newAction(Request $request)
     {
         $post = new Post();
-        $form = $this->createForm('App\Form\PostType', $post, [
+        $form = $this->createForm(PostType::class, $post, [
             'action' => $this->generateUrl('admin_post_new')
         ]);
 
@@ -71,7 +72,7 @@ class PostController extends Controller
             return $this->redirectToRoute('admin_post_index');
         }
 
-        return $this->render('AdminBundle::post/new.html.twig', array(
+        return $this->render('admin/post/new.html.twig', array(
             'post' => $post,
             'form' => $form->createView(),
         ));
@@ -96,7 +97,7 @@ class PostController extends Controller
             return $this->redirectToRoute('admin_post_edit', array('id' => $post->getId()));
         }
 
-        return $this->render('AdminBundle::post/edit.html.twig', array(
+        return $this->render('admin/post/edit.html.twig', array(
             'post' => $post,
             'edit_form' => $editForm->createView()
         ));

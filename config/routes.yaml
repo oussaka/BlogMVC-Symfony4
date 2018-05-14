@@ -3,7 +3,7 @@ app:
     type:     annotation
 
 admin:
-    resource: "../src/AdminBundle/Controller/"
+    resource: "../src/Controller/Admin/"
     type:     annotation
     prefix:   /admin
 

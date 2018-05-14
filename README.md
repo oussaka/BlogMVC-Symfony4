@@ -1,7 +1,7 @@
 BlogMVC : Symfony 4
 ========================
 
-[![Build Status](https://travis-ci.org/Grafikart/BlogMVC-Symfony4.svg?branch=master)](https://travis-ci.org/Grafikart/BlogMVC-Symfony4)
+[![Build Status](https://travis-ci.org/oussaka/BlogMVC-Symfony4.svg?branch=master)](https://travis-ci.org/oussaka/BlogMVC-Symfony4)
 
 This is my contribution to BlogMVC.com using Symfony 4. I used this project to learn the framework so if you think some patterns are not respected please create an issue :). 
 

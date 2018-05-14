@@ -2,8 +2,8 @@
 
 namespace AdminBundle\Controller;
 
-use AppBundle\Entity\Post;
-use AppBundle\Form\PostType;
+use App\Entity\Post;
+use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class PostController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Post');
+        $repository = $em->getRepository('App:Post');
         $paginator  = $this->get('knp_paginator');
 
         $query = $repository->createQueryBuilderWithCategory()
@@ -57,7 +57,7 @@ class PostController extends Controller
     public function newAction(Request $request)
     {
         $post = new Post();
-        $form = $this->createForm('AppBundle\Form\PostType', $post, [
+        $form = $this->createForm('App\Form\PostType', $post, [
             'action' => $this->generateUrl('admin_post_new')
         ]);
 

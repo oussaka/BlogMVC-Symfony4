@@ -6,11 +6,11 @@ security:
     providers:
         db_provider:
             entity:
-                class: AppBundle:User
+                class: App\Entity\User
                 property: username
 
     encoders:
-        AppBundle\Entity\User:
+        App\Entity\User:
             algorithm: bcrypt
             cost: 12
 

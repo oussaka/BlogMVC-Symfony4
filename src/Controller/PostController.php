@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Post controller.
@@ -47,10 +48,11 @@ class PostController extends Controller
      * @Route("/post/{slug}", name="post_show")
      * @Method({"GET", "POST"})
      */
-    public function showAction(Request $request, $slug)
+    public function showAction(Request $request, string $slug): Response
     {
+
         $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository("App:Post")->createQueryBuilderWithUserAndCategory()
+        $post = $em->getRepository(Post::class)->createQueryBuilderWithUserAndCategory()
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()

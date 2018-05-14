@@ -174,11 +174,11 @@ class Comment
     /**
      * Set post
      *
-     * @param \App\Entity\Comment $post
+     * @param \App\Entity\Post $post
      *
      * @return Comment
      */
-    public function setPost(\App\Entity\Post $post = null)
+    public function setPost(Post $post = null)
     {
         $this->post = $post;
 
@@ -188,9 +188,9 @@ class Comment
     /**
      * Get post
      *
-     * @return \App\Entity\Comment
+     * @return \App\Entity\Post
      */
-    public function getPost()
+    public function getPost(): Post
     {
         return $this->post;
     }

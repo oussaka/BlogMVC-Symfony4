@@ -1,3 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+app:
+    resource: "../src/AppBundle/Controller/"
+    type:     annotation
+
+admin:
+    resource: "../src/AdminBundle/Controller/"
+    type:     annotation
+#    prefix:   /admin
+
+logout:
+    path: /logout

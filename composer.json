@@ -6,9 +6,9 @@
     "autoload": {
         "psr-4": {
             "AppBundle\\": "src/AppBundle",
-            "App\\": "src/"
-        },
-        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+          "AdminBundle\\": "src/AdminBundle",
+          "App\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -33,6 +33,7 @@
         "symfony/framework-bundle": "^4.0",
         "symfony/monolog-bundle": "^3.0",
         "symfony/polyfill-apcu": "^1.0",
+        "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "^4.0",
         "symfony/security-csrf": "^4.0",
         "symfony/swiftmailer-bundle": "^3.1",

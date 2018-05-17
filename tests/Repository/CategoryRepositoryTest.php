@@ -2,11 +2,10 @@
 
 namespace App\Tests\Repository;
 
-use AppBundle\Entity\Category;
-use AppBundle\Entity\Post;
-use AppBundle\Repository\CategoryRepository;
-use Doctrine\DBAL\Schema\SchemaException;
+use App\Entity\Post;
+use App\Entity\Category;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\DBAL\Schema\SchemaException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class CategoryRepositoryTest extends KernelTestCase

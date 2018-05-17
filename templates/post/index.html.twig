@@ -38,7 +38,7 @@
         <p>
             <small>
                 Category : <a href="{{ path('post_category', {slug: post.category.slug}) }}">{{ post.category.name }}</a>,
-                by <a href="{{ path('post_author', {id: post.user.id}) }}">{{ post.user.username }}</a>
+                {#by <a href="{{ path('post_author', {id: post.user.id}) }}">{{ post.user.username }}</a>#}
                 on {{ post.createdAt | date("M dS Y") }}</small>
         </p>
         <p>

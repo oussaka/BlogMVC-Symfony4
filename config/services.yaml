@@ -28,5 +28,8 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-#    AppBundle\Twig\TwigExtension: '@cebe\markdown\GithubMarkdown'
     cebe\markdown\GithubMarkdown: ~
+
+    App\EventListener\CounterSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

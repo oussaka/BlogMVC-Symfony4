@@ -3,6 +3,7 @@ namespace App\EventListener;
 
 
 use App\Entity\Post;
+use App\Entity\Category;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -15,7 +16,7 @@ class CounterSubscriber implements EventSubscriber
      *
      * @return array
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             'preUpdate',
@@ -29,7 +30,7 @@ class CounterSubscriber implements EventSubscriber
             if ($event->hasChangedField('category')) {
                 $event
                     ->getEntityManager()
-                    ->getRepository("App:Category")
+                    ->getRepository(Category::class)
                     ->decrementCount($event->getOldValue('category'))
                     ->incrementCount($event->getNewValue('category'));
             }
@@ -40,7 +41,7 @@ class CounterSubscriber implements EventSubscriber
         if ($event->getObject() instanceof Post) {
             $event
                 ->getEntityManager()
-                ->getRepository("App:Category")
+                ->getRepository(Category::class)
                 ->decrementCount($event->getEntity()->getCategory());
         }
     }
@@ -49,10 +50,9 @@ class CounterSubscriber implements EventSubscriber
         if ($event->getObject() instanceof Post) {
             $event
                 ->getEntityManager()
-                ->getRepository("App:Category")
+                ->getRepository(Category::class)
                 ->incrementCount($event->getEntity()->getCategory());
         }
-
     }
 
 }

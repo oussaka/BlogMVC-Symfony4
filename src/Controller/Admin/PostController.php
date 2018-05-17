@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -16,6 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PostController extends Controller
 {
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * Lists all post entities.
      *
@@ -24,8 +32,7 @@ class PostController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Post::class);
+        $repository = $this->em->getRepository(Post::class);
         $paginator  = $this->get('knp_paginator');
 
         $query = $repository->createQueryBuilderWithCategory()
@@ -65,9 +72,8 @@ class PostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
+            $this->em->persist($post);
+            $this->em->flush();
             $this->addFlash('success', 'Post created successfully');
             return $this->redirectToRoute('admin_post_index');
         }
@@ -115,10 +121,9 @@ class PostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($post);
+            $this->em->remove($post);
             $this->addFlash('success', 'Post deleted');
-            $em->flush($post);
+            $this->em->flush($post);
         }
 
         return $this->redirectToRoute('admin_post_index');

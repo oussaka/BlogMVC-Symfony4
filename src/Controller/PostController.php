@@ -7,9 +7,9 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Form\CommentType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Post controller.
  *
  */
-class PostController extends Controller
+class PostController extends AbstractController
 {
     /**
      * Lists all post entities.

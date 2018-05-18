@@ -5,9 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Post;
 use App\Form\PostType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("post", name="")
  */
-class PostController extends Controller
+class PostController extends AbstractController
 {
     private $em;
 

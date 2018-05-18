@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Post;
 use App\Form\PostType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +19,12 @@ use Symfony\Component\HttpFoundation\Request;
 class PostController extends AbstractController
 {
     private $em;
+    private $paginator;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
+        $this->paginator = $paginator;
     }
 
     /**
@@ -33,13 +36,12 @@ class PostController extends AbstractController
     public function index(Request $request)
     {
         $repository = $this->em->getRepository(Post::class);
-        $paginator  = $this->get('knp_paginator');
 
         $query = $repository->createQueryBuilderWithCategory()
             ->orderBy('p.createdAt', 'desc')
             ->getQuery();
 
-        $posts = $paginator->paginate(
+        $posts = $this->paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             10

@@ -7,6 +7,8 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Form\CommentType;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +21,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PostController extends AbstractController
 {
+    private $em;
+    private $paginator;
+
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
+    {
+        $this->em = $em;
+        $this->paginator = $paginator;
+    }
+
     /**
      * Lists all post entities.
      *
@@ -27,11 +38,10 @@ class PostController extends AbstractController
      */
     public function index(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('App:Post')->createQueryBuilderWithCategory()
+        $query = $this->em->getRepository('App:Post')->createQueryBuilderWithCategory()
             ->getQuery();
 
-        $posts = $this->get('knp_paginator')->paginate(
+        $posts = $this->paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             10
@@ -51,8 +61,7 @@ class PostController extends AbstractController
     public function show(Request $request, string $slug): Response
     {
 
-        $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository(Post::class)->createQueryBuilderWithUserAndCategory()
+        $post = $this->em->getRepository(Post::class)->createQueryBuilderWithUserAndCategory()
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
@@ -66,8 +75,8 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setPost($post);
-            $em->persist($comment);
-            $em->flush();
+            $this->em->persist($comment);
+            $this->em->flush();
             $this->addFlash('success', 'Thanks for your comment');
             return $this->redirectToRoute('post_show', ['slug' => $post->getSlug()]);
         }
@@ -84,13 +93,12 @@ class PostController extends AbstractController
      */
     public function author(Request $request, User $user)
     {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('App:Post')->createQueryBuilderWithCategory()
+        $query = $this->em->getRepository('App:Post')->createQueryBuilderWithCategory()
             ->where("p.user = :user")
             ->setParameter("user", $user)
             ->getQuery();
 
-        $posts = $this->get('knp_paginator')->paginate(
+        $posts = $this->paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             10
@@ -109,13 +117,12 @@ class PostController extends AbstractController
      */
     public function category(Request $request, Category $category)
     {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('App:Post')->createQueryBuilderWithUser()
+        $query = $this->em->getRepository('App:Post')->createQueryBuilderWithUser()
             ->where("p.category = :category")
             ->setParameter("category", $category)
             ->getQuery();
 
-        $posts = $this->get('knp_paginator')->paginate(
+        $posts = $this->paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
             10
@@ -130,9 +137,8 @@ class PostController extends AbstractController
 
     public function sidebar()
     {
-        $em = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('App:Category')->findAll();
-        $posts = $em->getRepository('App:Post')->findBy(
+        $categories = $this->em->getRepository('App:Category')->findAll();
+        $posts = $this->em->getRepository('App:Post')->findBy(
             [],
             ['createdAt' => 'DESC'],
             2,

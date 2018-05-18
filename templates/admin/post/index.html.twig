@@ -36,8 +36,10 @@
         </tbody>
     </table>
 
-    <div class="navigation">
-        {{ knp_pagination_render(posts) }}
-    </div>
+    <nav aria-label="page navigation">
+        <div class="container d-flex justify-content-center">
+            {{ knp_pagination_render(posts) }}
+        </div>
+    </nav>
 
 {% endblock %}

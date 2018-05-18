@@ -1,22 +1,4 @@
 .idea
-*.iml
-.web-server-pid
-/app/config/parameters.yml
-/build/
-/phpunit.xml
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
-/vendor/
-/web/bundles/
 
 ###> symfony/phpunit-bridge ###
 .phpunit
@@ -25,8 +7,23 @@
 
 ###> symfony/framework-bundle ###
 /.env
+/build/
 /public/bundles/
-/var/
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/data
+/var/data/*
+!var/data/blog_test.sqlite
+!var/data/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!var/SymfonyRequirements.php
 /vendor/
 ###< symfony/framework-bundle ###
 

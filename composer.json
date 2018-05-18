@@ -23,6 +23,7 @@
         "doctrine/orm": "^2.5",
         "knplabs/knp-paginator-bundle": "^2.5",
         "knplabs/knp-time-bundle": "^1.7",
+        "ocramius/proxy-manager": "~2.1.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "symfony/asset": "^4.0",
         "symfony/flex": "^1.0",

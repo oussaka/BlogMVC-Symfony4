@@ -30,7 +30,7 @@ class PostController extends Controller
      * @Route("/", name="admin_post_index")
      * @Method("GET")
      */
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $repository = $this->em->getRepository(Post::class);
         $paginator  = $this->get('knp_paginator');
@@ -62,7 +62,7 @@ class PostController extends Controller
      * @Route("/new", name="admin_post_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post, [
@@ -90,7 +90,7 @@ class PostController extends Controller
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Post $post)
+    public function edit(Request $request, Post $post)
     {
         $editForm = $this->createForm(PostType::class, $post, [
             'action' => $this->generateUrl('admin_post_edit', ['id' => $post->getId()])
@@ -115,7 +115,7 @@ class PostController extends Controller
      * @Route("/{id}", name="admin_post_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Post $post)
+    public function delete(Request $request, Post $post)
     {
         $form = $this->createDeleteForm($post);
         $form->handleRequest($request);

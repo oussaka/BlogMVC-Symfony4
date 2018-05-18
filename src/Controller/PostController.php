@@ -25,7 +25,7 @@ class PostController extends Controller
      * @Route("/", name="root")
      * @Method("GET")
      */
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('App:Post')->createQueryBuilderWithCategory()
@@ -48,7 +48,7 @@ class PostController extends Controller
      * @Route("/post/{slug}", name="post_show")
      * @Method({"GET", "POST"})
      */
-    public function showAction(Request $request, string $slug): Response
+    public function show(Request $request, string $slug): Response
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -82,7 +82,7 @@ class PostController extends Controller
      * @Route("/author/{id}", name="post_author")
      * @Method("GET")
      */
-    public function authorAction(Request $request, User $user)
+    public function author(Request $request, User $user)
     {
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('App:Post')->createQueryBuilderWithCategory()
@@ -107,7 +107,7 @@ class PostController extends Controller
      * @Route("/category/{slug}", name="post_category")
      * @Method("GET")
      */
-    public function categoryAction(Request $request, Category $category)
+    public function category(Request $request, Category $category)
     {
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('App:Post')->createQueryBuilderWithUser()
@@ -128,7 +128,7 @@ class PostController extends Controller
         ]);
     }
 
-    public function sidebarAction()
+    public function sidebar()
     {
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository('App:Category')->findAll();

@@ -18,11 +18,13 @@ class CategoryRepositoryTest extends KernelTestCase
     /**
      * {@inheritDoc}
      */
-    protected function setUp(){
+    public function setUp(): void
+    {
         self::bootKernel();
         $this->em = static::$kernel->getContainer()
             ->get('doctrine')
-            ->getManager();
+            ->getManager()
+        ;
         $this->createSchema();
         parent::setUp();
     }
@@ -100,7 +102,7 @@ class CategoryRepositoryTest extends KernelTestCase
 
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         // $this->dropSchema();

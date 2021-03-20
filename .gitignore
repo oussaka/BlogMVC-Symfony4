@@ -2,28 +2,17 @@
 
 ###> symfony/phpunit-bridge ###
 .phpunit
+.phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/framework-bundle ###
-/.env
-/build/
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/data
-/var/data/*
-!var/data/blog_test.sqlite
-!var/data/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
+/var/
 /vendor/
 ###< symfony/framework-bundle ###
 

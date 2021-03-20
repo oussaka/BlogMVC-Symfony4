@@ -20,11 +20,11 @@ security:
             provider: db_provider
             anonymous: ~
             form_login:
-                login_path: login
-                check_path: login
+                login_path: app_login
+                check_path: app_login
                 csrf_token_generator: security.csrf.token_manager
             logout:
-                path: /logout
+                path: app_logout
                 target: /
             logout_on_user_change: true
             # activate different ways to authenticate

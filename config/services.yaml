@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     cache_type: file_system
+    admin_prefix:     '%env(resolve:ADMIN_PREFIX)%'
 
 services:
     # default configuration for services in *this* file

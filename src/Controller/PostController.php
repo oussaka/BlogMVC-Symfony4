@@ -9,8 +9,7 @@ use App\Entity\User;
 use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +32,7 @@ class PostController extends AbstractController
     /**
      * Lists all post entities.
      *
-     * @Route("/", name="root")
-     * @Method("GET")
+     * @Route("/", name="root", methods={"GET"})
      */
     public function index(Request $request)
     {
@@ -55,8 +53,7 @@ class PostController extends AbstractController
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/post/{slug}", name="post_show")
-     * @Method({"GET", "POST"})
+     * @Route("/post/{slug}", name="post_show", methods={"GET", "POST"})
      */
     public function show(Request $request, string $slug): Response
     {
@@ -88,8 +85,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/author/{id}", name="post_author")
-     * @Method("GET")
+     * @Route("/author/{id}", name="post_author", methods={"GET"})
      */
     public function author(Request $request, User $user)
     {
@@ -112,8 +108,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/category/{slug}", name="post_category")
-     * @Method("GET")
+     * @Route("/category/{slug}", name="post_category", methods={"GET"})
      */
     public function category(Request $request, Category $category)
     {

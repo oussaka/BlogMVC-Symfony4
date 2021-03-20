@@ -6,8 +6,7 @@ use App\Entity\Post;
 use App\Form\PostType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,8 +29,7 @@ class PostController extends AbstractController
     /**
      * Lists all post entities.
      *
-     * @Route("/", name="admin_post_index")
-     * @Method("GET")
+     * @Route("/", name="admin_post_index", methods={"GET"})
      */
     public function index(Request $request)
     {
@@ -61,8 +59,7 @@ class PostController extends AbstractController
     /**
      * Creates a new post entity.
      *
-     * @Route("/new", name="admin_post_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="admin_post_new", methods={"POST", "GET"})
      */
     public function new(Request $request)
     {
@@ -89,8 +86,7 @@ class PostController extends AbstractController
     /**
      * Displays a form to edit an existing post entity.
      *
-     * @Route("/{id}/edit", name="admin_post_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="admin_post_edit", methods={"POST", "GET"})
      */
     public function edit(Request $request, Post $post)
     {
@@ -114,8 +110,7 @@ class PostController extends AbstractController
     /**
      * Deletes a post entity.
      *
-     * @Route("/{id}", name="admin_post_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="admin_post_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Post $post)
     {

@@ -3,9 +3,7 @@ app:
     type:     annotation
 
 admin:
-    resource: "../src/Controller/Admin/"
-    type:     annotation
-    prefix:   /admin
-
-logout:
-    path: /logout
+    # name_prefix: admin_
+    prefix:     "%admin_prefix%"
+    resource:   "../src/Controller/Admin/"
+    type:       annotation

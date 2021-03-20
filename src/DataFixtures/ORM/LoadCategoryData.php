@@ -2,10 +2,10 @@
 namespace App\DataFixtures\ORM;
 
 use App\Entity\Category;
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Persistence\ObjectManager;
 
-class LoadCategoryData implements FixtureInterface
+class LoadCategoryData extends AbstractFixture
 {
 
     public function load(ObjectManager $manager)

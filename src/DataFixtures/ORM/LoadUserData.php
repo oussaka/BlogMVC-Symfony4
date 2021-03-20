@@ -1,13 +1,13 @@
 <?php
 namespace App\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\User;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserData implements FixtureInterface, ContainerAwareInterface
+class LoadUserData extends AbstractFixture implements ContainerAwareInterface
 {
 
     /**

@@ -1,5 +1,7 @@
 language: php
 sudo: false
+services:
+  - sqlite
 
 cache:
   directories:
@@ -8,29 +10,45 @@ cache:
 
 env:
   global:
-    - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
-    - SYMFONY_PHPUNIT_VERSION="8.5"
+    - APP_ENV=test
+    - DATABASE_URL=sqlite://travis@127.0.0.1:5432/var/data/blog_test.sqlite
+    - PHPUNIT_FLAGS="-v"
 
 matrix:
   fast_finish: true
   include:
+    - php: 7.3
+      env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
     - php: 7.4
+      env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
     - php: nightly
   allow_failures:
     - php: nightly
 
 before_install:
   - '[[ "$TRAVIS_PHP_VERSION" == "nightly" ]] || phpenv config-rm xdebug.ini'
+  - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+  - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
+  - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
   - composer self-update
+  # install PHPSTAN for PHP 7+
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "5.6" ]]; then composer global require phpstan/phpstan-shim:0.8.5; fi
 
 install:
-  - composer install
+  - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
   - ./vendor/bin/simple-phpunit install
 
 script:
-  - ./vendor/bin/simple-phpunit
+  - php ./bin/console cache:clear
+  - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
   # this checks that the source code follows the Symfony Code Syntax rules
   # - '[[ "$TRAVIS_PHP_VERSION" == "nightly" ]] || ./vendor/bin/php-cs-fixer fix --diff --dry-run -v'
+  # Run PHPSTAN analysis for PHP 7+
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} != "5.6" ]]; then ~/.composer/vendor/phpstan/phpstan-shim/phpstan.phar analyse src/; fi
+
+  # Check if the code standards weren't broken.
+  # Run it only on PHP 7.2 which should be the fastest. No need to run it for all PHP versions
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]]; then bin/php-cs-fixer fix -v --dry-run --diff; fi
   # this checks that the YAML config files contain no syntax errors
   - php ./bin/console lint:yaml config
   # this checks that the Twig template files contain no syntax errors
@@ -38,6 +56,6 @@ script:
   # this checks that the XLIFF translations contain no syntax errors
   - php ./bin/console lint:xliff translations
   # this checks that the composer.json and composer.lock files are valid
-  - composer validate --strict
+  - composer validate --strict --no-check-lock
   # this checks that Doctrine's mapping configurations are valid
   - php ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction

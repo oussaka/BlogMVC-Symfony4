@@ -34,3 +34,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     cebe\markdown\GithubMarkdown: ~
+
+    App\EventListener\CounterSubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber' }

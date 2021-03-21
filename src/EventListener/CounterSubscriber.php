@@ -2,11 +2,12 @@
 namespace App\EventListener;
 
 
-use App\Entity\Post;
 use App\Entity\Category;
+use App\Entity\Post;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class CounterSubscriber implements EventSubscriber
 {
@@ -19,9 +20,9 @@ class CounterSubscriber implements EventSubscriber
     public function getSubscribedEvents(): array
     {
         return [
-            'preUpdate',
-            'postPersist',
-            'postRemove'
+            Events::postPersist,
+            Events::postRemove,
+            Events::preUpdate,
         ];
     }
 
@@ -29,10 +30,11 @@ class CounterSubscriber implements EventSubscriber
         if ($event->getObject() instanceof Post) {
             if ($event->hasChangedField('category')) {
                 $event
-                    ->getEntityManager()
+                    ->getObjectManager()
                     ->getRepository(Category::class)
                     ->decrementCount($event->getOldValue('category'))
-                    ->incrementCount($event->getNewValue('category'));
+                    ->incrementCount($event->getNewValue('category'))
+                ;
             }
         }
     }
@@ -40,18 +42,20 @@ class CounterSubscriber implements EventSubscriber
     public function postRemove(LifecycleEventArgs $event) {
         if ($event->getObject() instanceof Post) {
             $event
-                ->getEntityManager()
+                ->getObjectManager()
                 ->getRepository(Category::class)
-                ->decrementCount($event->getEntity()->getCategory());
+                ->decrementCount($event->getObject()->getCategory())
+            ;
         }
     }
 
     public function postPersist(LifecycleEventArgs $event) {
         if ($event->getObject() instanceof Post) {
             $event
-                ->getEntityManager()
+                ->getObjectManager()
                 ->getRepository(Category::class)
-                ->incrementCount($event->getEntity()->getCategory());
+                ->incrementCount($event->getObject()->getCategory())
+            ;
         }
     }
 

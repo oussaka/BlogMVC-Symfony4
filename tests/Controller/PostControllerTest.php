@@ -3,8 +3,6 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 
 class PostControllerTest extends WebTestCase
 {
@@ -21,9 +19,10 @@ class PostControllerTest extends WebTestCase
     /* public function testCompleteScenario()
     {
         // Create a new client to browse the application
-        $client = self::createClient();
+        $client = static::createClient();
 
         // Go to the list view
+        $url = "/";
         $crawler = $client->request('GET', $url);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /posts");
@@ -32,5 +31,4 @@ class PostControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('show')->link());
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code");
     } */
-
 }

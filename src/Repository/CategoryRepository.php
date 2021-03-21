@@ -12,12 +12,13 @@ use App\Entity\Category;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
-
-    public function incrementCount(Category $category) {
+    public function incrementCount(Category $category): self
+    {
         return $this->updateCount($category, " + 1");
     }
 
-    public function decrementCount(Category $category) {
+    public function decrementCount(Category $category): self
+    {
         return $this->updateCount($category, " - 1");
     }
 
@@ -29,8 +30,9 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->where("c = :category")
             ->setParameter('category', $category)
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
+
         return $this;
     }
-
 }
